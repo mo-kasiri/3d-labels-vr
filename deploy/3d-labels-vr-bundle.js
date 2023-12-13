@@ -2778,7 +2778,7 @@ __export(dist_exports, {
   Emitter: () => Emitter,
   ForceMode: () => ForceMode,
   I18N: () => I18N,
-  InputComponent: () => InputComponent,
+  InputComponent: () => InputComponent2,
   InputType: () => InputType,
   Justification: () => Justification,
   LightComponent: () => LightComponent,
@@ -4239,7 +4239,7 @@ __decorate([
 __decorate([
   nativeProperty()
 ], ViewComponent.prototype, "fov", null);
-var InputComponent = class extends Component {
+var InputComponent2 = class extends Component {
   /** Input component type */
   get inputType() {
     return this._engine.wasm._wl_input_component_get_type(this._id);
@@ -4280,16 +4280,16 @@ var InputComponent = class extends Component {
   }
 };
 /** @override */
-__publicField(InputComponent, "TypeName", "input");
+__publicField(InputComponent2, "TypeName", "input");
 __decorate([
   nativeProperty()
-], InputComponent.prototype, "inputType", null);
+], InputComponent2.prototype, "inputType", null);
 __decorate([
   enumerable()
-], InputComponent.prototype, "xrInputSource", null);
+], InputComponent2.prototype, "xrInputSource", null);
 __decorate([
   enumerable()
-], InputComponent.prototype, "handedness", null);
+], InputComponent2.prototype, "handedness", null);
 var LightComponent = class extends Component {
   getColor(out = new Float32Array(3)) {
     const wasm = this._engine.wasm;
@@ -8579,7 +8579,7 @@ var WonderlandEngine = class {
     } else if (type == "mesh") {
       component = new MeshComponent(this, componentType, componentId);
     } else if (type == "input") {
-      component = new InputComponent(this, componentType, componentId);
+      component = new InputComponent2(this, componentType, componentId);
     } else if (type == "light") {
       component = new LightComponent(this, componentType, componentId);
     } else if (type == "animation") {
@@ -16002,7 +16002,7 @@ __publicField(WasdControlsComponent, "Properties", {
 
 // js/button.js
 function hapticFeedback(object, strength, duration) {
-  const input = object.getComponent(InputComponent);
+  const input = object.getComponent(InputComponent2);
   if (input && input.xrInputSource) {
     const gamepad = input.xrInputSource.gamepad;
     if (gamepad && gamepad.hapticActuators)
@@ -16077,6 +16077,148 @@ __publicField(ButtonComponent, "Properties", {
   buttonMeshObject: Property.object(),
   /** Material to apply when the user hovers the button */
   hoverMaterial: Property.material()
+});
+
+// js/coliderDetection.js
+var ColiderDetection = class extends Component {
+  static onRegister(engine2) {
+    engine2.registerComponent(HowlerAudioSource);
+    engine2.registerComponent(CursorTarget);
+  }
+  init() {
+    let ventelationPanelMesh = this.ventelationPanel.getComponent("mesh");
+    ventelationPanelMesh.active = false;
+    let lasersPanelMesh = this.lasersPanel.getComponent("mesh");
+    lasersPanelMesh.active = false;
+    let headPhonePanelMesh = this.headPhonePanel.getComponent("mesh");
+    headPhonePanelMesh.active = false;
+    this.collider = this.object.getComponent("collision");
+    this.objectsArr = [];
+    this.check = false;
+    this.laserCollided = false;
+    this.ventelationCollided = false;
+    this.headPhoneCollided = false;
+    console.log(this.collider);
+    console.log("init() with param", this.param);
+  }
+  start() {
+    this.target = this.object.getComponent(CursorTarget) || this.object.addComponent(CursorTarget);
+    let ventelationPanelMesh = this.ventelationPanel.getComponent("mesh");
+    ventelationPanelMesh.active = false;
+    let lasersPanelMesh = this.lasersPanel.getComponent("mesh");
+    lasersPanelMesh.active = false;
+    let headPhonePanelMesh = this.headPhonePanel.getComponent("mesh");
+    headPhonePanelMesh.active = false;
+  }
+  update(dt) {
+    let collidingComps = this.collider.queryOverlaps();
+    for (let i = 0; i < collidingComps.length; ++i) {
+      if (!this.check) {
+        console.log("hi");
+        console.log(collidingComps[i]);
+        if (collidingComps[i].object.name === "ventelation") {
+          this.ventelationCollided = true;
+          this.laserCollided = false;
+          this.headPhoneCollided = false;
+          let ventelationPinmat = this.ventelationPin.getComponent("mesh");
+          ventelationPinmat.material = this.matCollision;
+        }
+        if (collidingComps[i].object.name === "lasers") {
+          this.laserCollided = true;
+          this.ventelationCollided = false;
+          this.headPhoneCollided = false;
+          let laserPinmat = this.lasersPin.getComponent("mesh");
+          laserPinmat.material = this.matCollision;
+        }
+        if (collidingComps[i].object.name === "headPhone") {
+          this.headPhoneCollided = true;
+          this.ventelationCollided = false;
+          this.laserCollided = false;
+          let headPhonePinmat = this.headPhonePin.getComponent("mesh");
+          headPhonePinmat.material = this.matCollision;
+        }
+        this.objectsArr.push(collidingComps[i]);
+        this.check = true;
+      }
+    }
+    if (collidingComps.length === 0) {
+      this.check = false;
+      for (let i = 0; i < this.objectsArr.length; i++) {
+        let ventelationPinmat = this.ventelationPin.getComponent("mesh");
+        ventelationPinmat.material = this.matStart;
+        let laserPinmat = this.lasersPin.getComponent("mesh");
+        laserPinmat.material = this.matStart;
+        let headPhonePinmat = this.headPhonePin.getComponent("mesh");
+        headPhonePinmat.material = this.matStart;
+      }
+      this.objectsArr = [];
+    }
+    if (this.ventelationCollided) {
+      let ventelationPanelMesh = this.ventelationPanel.getComponent("mesh");
+      ventelationPanelMesh.active = true;
+      let lasersPanelMesh = this.lasersPanel.getComponent("mesh");
+      lasersPanelMesh.active = false;
+      let headPhonePanelMesh = this.headPhonePanel.getComponent("mesh");
+      headPhonePanelMesh.active = false;
+    }
+    if (this.headPhoneCollided) {
+      let headPhonePanelMesh = this.headPhonePanel.getComponent("mesh");
+      headPhonePanelMesh.active = true;
+      let ventelationPanelMesh = this.ventelationPanel.getComponent("mesh");
+      ventelationPanelMesh.active = false;
+      let lasersPanelMesh = this.lasersPanel.getComponent("mesh");
+      lasersPanelMesh.active = false;
+    }
+    if (this.laserCollided) {
+      let lasersPanelMesh = this.lasersPanel.getComponent("mesh");
+      lasersPanelMesh.active = true;
+      let headPhonePanelMesh = this.headPhonePanel.getComponent("mesh");
+      headPhonePanelMesh.active = false;
+      let ventelationPanelMesh = this.ventelationPanel.getComponent("mesh");
+      ventelationPanelMesh.active = false;
+    }
+  }
+};
+__publicField(ColiderDetection, "TypeName", "coliderDetection");
+/* Properties that are configurable in the editor */
+__publicField(ColiderDetection, "Properties", {
+  param: Property.float(1),
+  matStart: Property.material(),
+  matCollision: Property.material(),
+  headPhonePin: Property.object(null),
+  lasersPin: Property.object(null),
+  ventelationPin: Property.object(null),
+  headPhonePanel: Property.object(),
+  lasersPanel: Property.object(),
+  ventelationPanel: Property.object(),
+  eyeLeft: Property.object()
+});
+
+// js/gaze-info.js
+var GazeInfo = class extends Component {
+  //Properties
+  origin = [0, 0, 0];
+  direction = [0, 0, 0];
+  static onRegister(engine2) {
+  }
+  init() {
+  }
+  start() {
+  }
+  update(dt) {
+  }
+};
+__publicField(GazeInfo, "TypeName", "gaze-info");
+/* Properties that are configurable in the editor */
+__publicField(GazeInfo, "Properties", {
+  //collisionIndicator: Property.object(null),
+  ventelation: Property.object(null),
+  lasers: Property.object(null),
+  headPhone: Property.object(null),
+  headPhonePin: Property.object(null),
+  lasersPin: Property.object(null),
+  ventelationPin: Property.object(null)
+  //handedness: Property.enum( ['input component', 'left', 'right', 'none'], 'input component' )
 });
 
 // pp/index.js
@@ -25083,8 +25225,8 @@ function getClassFromType(type, engine2 = Globals.getMainEngine()) {
         case CollisionComponent.TypeName:
           classToReturn = CollisionComponent;
           break;
-        case InputComponent.TypeName:
-          classToReturn = InputComponent;
+        case InputComponent2.TypeName:
+          classToReturn = InputComponent2;
           break;
         case LightComponent.TypeName:
           classToReturn = LightComponent;
@@ -25331,7 +25473,7 @@ var ComponentUtils = {
 var _myWLNativeComponentTypes = [
   AnimationComponent.TypeName,
   CollisionComponent.TypeName,
-  InputComponent.TypeName,
+  InputComponent2.TypeName,
   LightComponent.TypeName,
   MeshComponent.TypeName,
   PhysXComponent.TypeName,
@@ -26933,7 +27075,7 @@ function initCursorComponentModPrototype() {
   };
   cursorComponentMod.start = function start() {
     if (this.handedness == 0) {
-      let inputComp = this.object.pp_getComponent(InputComponent);
+      let inputComp = this.object.pp_getComponent(InputComponent2);
       if (!inputComp) {
         console.warn("cursor component on object " + this.object.pp_getName() + ' was configured with handedness "input component", but object has no input component.');
       } else {
@@ -37648,7 +37790,7 @@ var DebugWLComponentsFunctionsPerformanceAnalyzerComponent = class extends Compo
     let nativeComponentClasses = [
       AnimationComponent,
       CollisionComponent,
-      InputComponent,
+      InputComponent2,
       LightComponent,
       MeshComponent,
       PhysXComponent,
@@ -57188,6 +57330,8 @@ engine.registerComponent(PlayerHeight);
 engine.registerComponent(TeleportComponent);
 engine.registerComponent(VrModeActiveSwitch);
 engine.registerComponent(ButtonComponent);
+engine.registerComponent(ColiderDetection);
+engine.registerComponent(GazeInfo);
 engine.registerComponent(GrabbableComponent);
 engine.registerComponent(GrabberHandComponent);
 engine.registerComponent(PPGatewayComponent);

@@ -32,20 +32,6 @@
                     "active": true
                 },
                 {
-                    "type": "collision",
-                    "collision": {
-                        "collider": "aabb",
-                        "aabb": {
-                            "extents": [
-                                4.0,
-                                0.05,
-                                4.0
-                            ]
-                        },
-                        "groups": 4
-                    }
-                },
-                {
                     "type": "physx",
                     "physx": {
                         "static": true,
@@ -103,6 +89,17 @@
                     "vr-mode-active-switch": {
                         "activateComponents": "in non-VR"
                     }
+                },
+                {
+                    "type": "gaze-info",
+                    "gaze-info": {
+                        "ventelation": "276",
+                        "lasers": "277",
+                        "headPhone": "279",
+                        "headPhonePin": "289",
+                        "lasersPin": "290",
+                        "ventelationPin": "291"
+                    }
                 }
             ],
             "translation": [
@@ -134,6 +131,19 @@
                     "input": {
                         "type": "eye left"
                     }
+                },
+                {
+                    "type": "gaze-info",
+                    "gaze-info": {
+                        "ventelation": "276",
+                        "lasers": "277",
+                        "headPhone": "279",
+                        "collisionIndicator": "127",
+                        "headPhonePin": "289",
+                        "lasersPin": "290",
+                        "ventelationPin": "291"
+                    },
+                    "active": true
                 }
             ],
             "translation": [
@@ -164,6 +174,17 @@
                     "type": "input",
                     "input": {
                         "type": "eye right"
+                    }
+                },
+                {
+                    "type": "gaze-info",
+                    "gaze-info": {
+                        "ventelation": "276",
+                        "lasers": "277",
+                        "headPhone": "279",
+                        "headPhonePin": "289",
+                        "lasersPin": "290",
+                        "ventelationPin": "291"
                     }
                 }
             ],
@@ -778,7 +799,8 @@
                     "mesh": {
                         "mesh": "9",
                         "material": "128"
-                    }
+                    },
+                    "active": true
                 }
             ],
             "parent": "256",
@@ -829,6 +851,15 @@
                         "allowSimulation": false,
                         "kinematic": true
                     }
+                },
+                {
+                    "type": "collision",
+                    "collision": {
+                        "sphere": {
+                            "radius": 0.05
+                        },
+                        "groups": 255
+                    }
                 }
             ],
             "translation": [
@@ -874,6 +905,29 @@
                         "trigger": true,
                         "allowSimulation": false,
                         "kinematic": true
+                    }
+                },
+                {
+                    "type": "collision",
+                    "collision": {
+                        "sphere": {
+                            "radius": 0.05
+                        }
+                    }
+                },
+                {
+                    "type": "coliderDetection",
+                    "coliderDetection": {
+                        "headPhone": "194",
+                        "headPhonePin": "289",
+                        "lasersPin": "290",
+                        "ventelationPin": "291",
+                        "matStart": "25",
+                        "matCollision": "22",
+                        "headPhonePanel": "280",
+                        "lasersPanel": "278",
+                        "ventelationPanel": "274",
+                        "eyeLeft": "18"
                     }
                 }
             ],
@@ -941,7 +995,7 @@
             "parent": "134",
             "components": [
                 {
-                    "active": true,
+                    "active": false,
                     "mesh": {
                         "skin": "133"
                     }
@@ -1232,7 +1286,8 @@
                 {
                     "mesh": {
                         "skin": "166"
-                    }
+                    },
+                    "active": false
                 }
             ]
         },
@@ -1462,20 +1517,20 @@
                 }
             ],
             "translation": [
-                -0.146539,
-                1.2,
-                0.0
+                0.0813736,
+                1.2779185,
+                0.6819614
             ],
             "rotation": [
-                0.5002121,
+                0.5002122,
                 0.0,
                 0.0,
                 0.8659028
             ],
             "scaling": [
-                0.25,
-                0.1249997,
-                0.2499997
+                0.2949999,
+                0.1249995,
+                0.15
             ],
             "parent": "256"
         },
@@ -1540,20 +1595,20 @@
                 }
             ],
             "translation": [
-                0.0,
-                0.057682,
-                0.175434
+                0.6376427,
+                0.0717914,
+                0.162186
             ],
             "rotation": [
-                -0.0,
+                -7.674090056752902e-7,
                 0.0,
                 0.0,
                 1.0
             ],
             "scaling": [
-                0.4,
-                0.4999999,
-                0.3
+                0.2718817,
+                0.4009999,
+                0.3009999
             ]
         },
         "198": {
@@ -1563,7 +1618,7 @@
                 {
                     "type": "text",
                     "text": {
-                        "text": "Thanks!"
+                        "text": "Head Phone"
                     }
                 }
             ],
@@ -1591,21 +1646,21 @@
                 {
                     "type": "text",
                     "text": {
-                        "text": "Welcome to\nWonderland",
+                        "text": "Labels\n",
                         "material": "201"
                     }
                 }
             ],
             "translation": [
-                -0.0000023,
-                0.1554993,
-                -0.303415
+                -0.4955107,
+                0.2064926,
+                -0.3266497
             ],
             "rotation": [
                 -0.7068591,
                 0.0,
                 0.0,
-                0.7073543
+                0.7073544
             ],
             "scaling": [
                 1.5,
@@ -1637,29 +1692,6 @@
                 1.0,
                 1.0
             ]
-        },
-        "208": {
-            "link": {
-                "name": "TeleportIndicator",
-                "file": "models\\teleport-indicator.glb"
-            },
-            "translation": [
-                0.0,
-                0.0099999,
-                1.3311299
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scaling": [
-                1.0,
-                1.0,
-                1.0
-            ],
-            "parent": "256"
         },
         "209": {
             "name": "CursorRayLeft",
@@ -1826,7 +1858,7 @@
             "translation": [
                 0.0,
                 0.0,
-                0.0
+                1.5221183
             ],
             "rotation": [
                 0.0,
@@ -1889,32 +1921,6 @@
                 1.0
             ]
         },
-        "267": {
-            "link": {
-                "name": "node_damagedHelmet_-6514",
-                "file": "models\\helmet.glb"
-            },
-            "translation": [
-                0.0,
-                2.3839735,
-                -6.2433328
-            ],
-            "rotation": [
-                0.7071066,
-                0.0,
-                0.0,
-                0.7071068
-            ],
-            "scaling": [
-                2.3288016,
-                2.3287663,
-                2.3287663
-            ],
-            "components": [
-                null
-            ],
-            "name": "DemoHelmet"
-        },
         "269": {
             "link": {
                 "name": "node_damagedHelmet_-6514",
@@ -1922,13 +1928,13 @@
             },
             "scaling": [
                 0.2,
-                0.1999975,
-                0.1999975
+                0.1999903,
+                0.1999903
             ],
             "translation": [
-                -0.6952877,
-                1.266395,
-                0.2949226
+                0.0447006,
+                1.6675741,
+                0.229509
             ],
             "rotation": [
                 0.7071068,
@@ -1951,7 +1957,8 @@
                                 0.18,
                                 0.18
                             ]
-                        }
+                        },
+                        "static": false
                     },
                     "active": true
                 }
@@ -1978,7 +1985,8 @@
                                 0.6999999
                             ]
                         }
-                    }
+                    },
+                    "active": false
                 }
             ],
             "translation": [
@@ -2024,7 +2032,8 @@
                             0.0,
                             0.7071068
                         ]
-                    }
+                    },
+                    "active": false
                 }
             ],
             "translation": [
@@ -2070,7 +2079,8 @@
                             0.0,
                             0.7071068
                         ]
-                    }
+                    },
+                    "active": false
                 }
             ],
             "translation": [
@@ -2110,7 +2120,8 @@
                                 0.4
                             ]
                         }
-                    }
+                    },
+                    "active": false
                 }
             ],
             "translation": [
@@ -2131,32 +2142,33 @@
             ]
         },
         "274": {
-            "name": "ventelationPlane",
-            "parent": "276",
+            "name": "ventelationPlaneL",
+            "parent": "130",
             "components": [
                 {
                     "type": "mesh",
                     "mesh": {
                         "mesh": "7",
-                        "material": "275"
-                    }
+                        "material": "26"
+                    },
+                    "active": false
                 }
             ],
             "translation": [
-                0.6291896,
-                -0.0114735,
-                -0.4442744
+                0.024145,
+                0.0969617,
+                -0.1553226
             ],
             "rotation": [
-                -0.7071068,
-                0.0,
-                0.0,
-                0.7071067
+                -0.707107,
+                1.8176019978000113e-7,
+                1.8175835236888818e-7,
+                0.7071064
             ],
             "scaling": [
-                0.5009999,
-                0.2999998,
-                0.9999963
+                0.1002007,
+                0.0599971,
+                0.1999878
             ]
         },
         "276": {
@@ -2182,11 +2194,12 @@
                 {
                     "type": "collision",
                     "collision": {
-                        "groups": 2,
+                        "groups": 255,
                         "sphere": {
-                            "radius": 0.0299999
+                            "radius": 0.0599999
                         }
-                    }
+                    },
+                    "active": true
                 }
             ]
         },
@@ -2214,43 +2227,45 @@
                     "type": "collision",
                     "collision": {
                         "sphere": {
-                            "radius": 0.0399999
-                        }
+                            "radius": 0.0599999
+                        },
+                        "groups": 255
                     }
                 }
             ]
         },
         "278": {
-            "name": "lasersPlane",
-            "parent": "277",
+            "name": "lasersPlaneL",
+            "parent": "130",
             "components": [
                 {
                     "type": "mesh",
                     "mesh": {
                         "mesh": "7",
-                        "material": "275"
-                    }
+                        "material": "22"
+                    },
+                    "active": false
                 }
             ],
             "translation": [
-                0.545155,
-                0.0654357,
-                0.3300029
+                0.0081358,
+                0.0984817,
+                -0.1479497
             ],
             "rotation": [
-                -0.7071065,
+                -0.7071069,
                 0.0,
-                0.0,
-                0.707107
+                -0.0,
+                0.7071065
             ],
             "scaling": [
-                0.5009999,
-                0.2999946,
-                0.999986
+                0.1002008,
+                0.0599954,
+                0.1999842
             ]
         },
         "279": {
-            "name": "headphone",
+            "name": "headPhone",
             "parent": "269",
             "translation": [
                 -0.774553,
@@ -2273,39 +2288,341 @@
                     "type": "collision",
                     "collision": {
                         "sphere": {
-                            "radius": 0.0399999
-                        }
+                            "radius": 0.0799999
+                        },
+                        "groups": 255
                     }
                 }
             ]
         },
         "280": {
-            "name": "headPhonePlane",
-            "parent": "279",
+            "name": "headPhonePlaneL",
+            "parent": "130",
             "components": [
                 {
                     "type": "mesh",
                     "mesh": {
                         "mesh": "7",
-                        "material": "275"
+                        "material": "206"
+                    },
+                    "active": false
+                }
+            ],
+            "translation": [
+                0.0095086,
+                0.1079643,
+                -0.1505735
+            ],
+            "rotation": [
+                -0.7071069,
+                2.923885915606661e-7,
+                2.9238853471724724e-7,
+                0.7071065
+            ],
+            "scaling": [
+                0.1002002,
+                0.059995,
+                0.1999849
+            ]
+        },
+        "289": {
+            "name": "headPhonePin",
+            "parent": "279",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "10",
+                        "material": "25"
+                    },
+                    "active": true
+                }
+            ],
+            "scaling": [
+                0.037217,
+                0.0999962,
+                0.0396889
+            ],
+            "rotation": [
+                -3.550685789832642e-7,
+                7.580916161487039e-8,
+                -0.7307587,
+                0.6826358
+            ],
+            "translation": [
+                -0.3044744,
+                -0.0269854,
+                -0.0000796
+            ]
+        },
+        "290": {
+            "name": "laserPin",
+            "parent": "277",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "10",
+                        "material": "25"
+                    },
+                    "active": true
+                }
+            ],
+            "scaling": [
+                0.0372171,
+                0.0999962,
+                0.0396889
+            ],
+            "rotation": [
+                -0.0565949,
+                -0.2005026,
+                0.9412835,
+                0.2656707
+            ],
+            "translation": [
+                0.1284632,
+                0.3095735,
+                0.0074992
+            ]
+        },
+        "291": {
+            "name": "ventelationPin",
+            "parent": "276",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "10",
+                        "material": "25"
+                    },
+                    "active": true
+                }
+            ],
+            "scaling": [
+                0.0372172,
+                0.0999956,
+                0.0396889
+            ],
+            "rotation": [
+                -0.0000017,
+                0.0000022,
+                0.9779642,
+                0.2087724
+            ],
+            "translation": [
+                0.0919114,
+                0.2165997,
+                -0.039709
+            ]
+        },
+        "292": {
+            "name": "Button",
+            "parent": "194",
+            "components": [
+                {
+                    "type": "collision",
+                    "collision": {
+                        "collider": "box",
+                        "box": {
+                            "extents": [
+                                0.0974999,
+                                0.025,
+                                0.045
+                            ]
+                        },
+                        "groups": 251
+                    }
+                },
+                {
+                    "type": "cursor-target"
+                },
+                {
+                    "type": "button",
+                    "button": {
+                        "buttonMeshObject": "196",
+                        "hoverMaterial": "203"
                     }
                 }
             ],
             "translation": [
-                -0.452983,
-                -0.0348396,
-                0.5185662
+                -0.6293475,
+                0.0718491,
+                0.1622146
             ],
             "rotation": [
-                -0.7071065,
+                -3.203748519808869e-7,
                 0.0,
                 0.0,
-                0.707107
+                1.0
             ],
             "scaling": [
-                0.5009999,
-                0.2999905,
-                0.9999778
+                0.2431806,
+                0.4009999,
+                0.3009999
+            ]
+        },
+        "293": {
+            "link": {
+                "name": "Cube",
+                "file": "models\\button.glb"
+            },
+            "parent": "292",
+            "components": [
+                {
+                    "mesh": {
+                        "material": "26"
+                    }
+                }
+            ],
+            "name": "ButtonMesh",
+            "translation": [
+                -0.0000094,
+                0.3244419,
+                -0.0000676
+            ],
+            "rotation": [
+                6.000006465001206e-7,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scaling": [
+                1.0,
+                0.9999989,
+                0.9999989
+            ]
+        },
+        "294": {
+            "name": "ButtonLabel",
+            "parent": "293",
+            "components": [
+                {
+                    "type": "text",
+                    "text": {
+                        "text": "Lasers"
+                    }
+                }
+            ],
+            "translation": [
+                -0.0001563,
+                0.1084579,
+                0.0000046
+            ],
+            "rotation": [
+                -0.7068095,
+                0.0,
+                0.0,
+                0.7074038
+            ],
+            "scaling": [
+                2.5,
+                3.7999999,
+                4.8000063
+            ]
+        },
+        "295": {
+            "name": "Button",
+            "parent": "194",
+            "components": [
+                {
+                    "type": "collision",
+                    "collision": {
+                        "collider": "box",
+                        "box": {
+                            "extents": [
+                                0.0974999,
+                                0.025,
+                                0.045
+                            ]
+                        },
+                        "groups": 251
+                    }
+                },
+                {
+                    "type": "cursor-target"
+                },
+                {
+                    "type": "button",
+                    "button": {
+                        "buttonMeshObject": "196",
+                        "hoverMaterial": "203"
+                    }
+                }
+            ],
+            "translation": [
+                -0.0139435,
+                0.0717912,
+                0.1622003
+            ],
+            "rotation": [
+                -5.438914740807377e-7,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scaling": [
+                0.2718817,
+                0.4009999,
+                0.3009999
+            ]
+        },
+        "296": {
+            "link": {
+                "name": "Cube",
+                "file": "models\\button.glb"
+            },
+            "parent": "295",
+            "components": [
+                {
+                    "mesh": {
+                        "material": "26"
+                    }
+                }
+            ],
+            "name": "ButtonMesh",
+            "translation": [
+                -0.0000094,
+                0.3244419,
+                -0.0000676
+            ],
+            "rotation": [
+                6.000006465001206e-7,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scaling": [
+                1.0,
+                0.9999989,
+                0.9999989
+            ]
+        },
+        "297": {
+            "name": "ButtonLabel",
+            "parent": "296",
+            "components": [
+                {
+                    "type": "text",
+                    "text": {
+                        "text": "Ventelation"
+                    }
+                }
+            ],
+            "translation": [
+                -0.0001563,
+                0.1084579,
+                0.0000046
+            ],
+            "rotation": [
+                -0.7068095,
+                0.0,
+                0.0,
+                0.7074038
+            ],
+            "scaling": [
+                2.5,
+                3.7999999,
+                4.8000063
             ]
         }
     },
@@ -2449,6 +2766,18 @@
             "link": {
                 "name": "mesh_helmet_LP_13930damagedHelmet",
                 "file": "models\\helmet.glb"
+            }
+        },
+        "281": {
+            "link": {
+                "name": "Torus",
+                "file": "models\\torus.glb"
+            }
+        },
+        "285": {
+            "link": {
+                "name": "Torus",
+                "file": "models\\torusAnim.glb"
             }
         }
     },
@@ -2607,16 +2936,16 @@
                     1.0
                 ],
                 "specularColor": [
-                    9.999899930335232e-7,
-                    9.999911299019004e-7,
-                    9.999999974752427e-7,
+                    0.9910314,
+                    0.9910314,
+                    0.9910314,
                     1.0
                 ],
-                "shininess": 10,
+                "shininess": 20,
                 "ambientColor": [
-                    0.317647,
-                    0.0,
-                    0.2165777,
+                    1.0,
+                    0.0269058,
+                    0.6903798,
                     1.0
                 ]
             }
@@ -2631,17 +2960,18 @@
                     1.0
                 ],
                 "specularColor": [
-                    9.999999974752427e-7,
-                    9.999899930335232e-7,
-                    9.999899930335232e-7,
+                    1.0,
+                    1.0,
+                    1.0,
                     1.0
                 ],
                 "ambientColor": [
-                    0.3843137,
-                    0.3089579,
+                    0.9327354,
+                    0.7498457,
                     0.0,
                     1.0
-                ]
+                ],
+                "shininess": 15
             }
         },
         "26": {
@@ -2797,10 +3127,10 @@
             "pipeline": "34",
             "Flat": {
                 "color": [
-                    0.8392156,
-                    0.8392072,
-                    0.8392072,
-                    1.0
+                    1.0,
+                    0.8340806,
+                    0.0,
+                    0.8
                 ]
             }
         },
@@ -3073,7 +3403,14 @@
             "enable": true
         }
     },
-    "animations": {},
+    "animations": {
+        "287": {
+            "link": {
+                "name": "TorusAction.003",
+                "file": "models\\torusAnim.glb"
+            }
+        }
+    },
     "skins": {
         "133": {
             "link": {
@@ -3284,6 +3621,14 @@
         },
         "268": {
             "fileName": "models/helmet.glb",
+            "importerName": ""
+        },
+        "283": {
+            "fileName": "models/torus.glb",
+            "importerName": ""
+        },
+        "288": {
+            "fileName": "models/torusAnim.glb",
             "importerName": ""
         }
     },

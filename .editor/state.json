@@ -7,9 +7,9 @@
         },
         "sceneView": {
             "visualizeObjects": false,
-            "visualizeCollision": true,
+            "visualizeCollision": false,
             "visualizeOverdraw": false,
-            "visualizePhysics": true
+            "visualizePhysics": false
         }
     },
     "openViews": {
