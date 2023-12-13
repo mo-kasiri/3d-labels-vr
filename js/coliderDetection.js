@@ -27,7 +27,8 @@ export class ColiderDetection extends Component {
 
         headPhonePanel: Property.object(),
         lasersPanel: Property.object(),
-        ventelationPanel: Property.object()
+        ventelationPanel: Property.object(),
+        eyeLeft: Property.object(),
 
     };
 
@@ -40,9 +41,20 @@ export class ColiderDetection extends Component {
     }
 
     init() {
+        let ventelationPanelMesh = this.ventelationPanel.getComponent('mesh');
+        ventelationPanelMesh.active = false;
+        let lasersPanelMesh = this.lasersPanel.getComponent('mesh');
+        lasersPanelMesh.active = false;
+        let headPhonePanelMesh = this.headPhonePanel.getComponent('mesh');
+        headPhonePanelMesh.active = false;
+
+
         this.collider = this.object.getComponent('collision');
         this.objectsArr = [];
         this.check = false;
+        this.laserCollided = false;
+        this.ventelationCollided = false;
+        this.headPhoneCollided = false;
         console.log(this.collider);
         console.log('init() with param', this.param);
     }
@@ -51,9 +63,18 @@ export class ColiderDetection extends Component {
         this.target =
             this.object.getComponent(CursorTarget) ||
             this.object.addComponent(CursorTarget);
+
+        let ventelationPanelMesh = this.ventelationPanel.getComponent('mesh');
+        ventelationPanelMesh.active = false;
+        let lasersPanelMesh = this.lasersPanel.getComponent('mesh');
+        lasersPanelMesh.active = false;
+        let headPhonePanelMesh = this.headPhonePanel.getComponent('mesh');
+        headPhonePanelMesh.active = false;
     }
 
     update(dt) {
+        //console.log(this.object.getPositionWorld())
+
         let collidingComps = this.collider.queryOverlaps();
         //console.log(collidingComps.length);
         //if(!this.check){
@@ -63,22 +84,33 @@ export class ColiderDetection extends Component {
                         console.log(collidingComps[i]);
 
                         if(collidingComps[i].object.name === "ventelation"){
+                            this.ventelationCollided = true;
+
+                            this.laserCollided = false;
+                            this.headPhoneCollided = false;
                             let ventelationPinmat = this.ventelationPin.getComponent('mesh');
                             ventelationPinmat.material = this.matCollision;
-
-                            console.log('reached ventelation');
+                           // console.log('reached ventelation');
                         }
 
                         if(collidingComps[i].object.name === "lasers"){
+                            this.laserCollided = true;
+
+                            this.ventelationCollided = false;
+                            this.headPhoneCollided = false;
                             let laserPinmat = this.lasersPin.getComponent('mesh');
                             laserPinmat.material = this.matCollision;
-                            console.log('reached lasers')
+                            //console.log('reached lasers')
                         }
 
                         if(collidingComps[i].object.name === "headPhone"){
+                            this.headPhoneCollided = true;
+
+                            this.ventelationCollided = false;
+                            this.laserCollided = false;
                             let headPhonePinmat = this.headPhonePin.getComponent('mesh');
                             headPhonePinmat.material = this.matCollision;
-                            console.log('reached headPhone')
+                            //console.log('reached headPhone')
                         }
 
 
@@ -90,9 +122,7 @@ export class ColiderDetection extends Component {
                 if(collidingComps.length===0){
                     this.check = false;
                     for (let i = 0; i < this.objectsArr.length; i++) {
-                        // let startMesh = this.objectsArr[i].object.getComponent('mesh');
-                        // console.log(startMesh);
-                        // startMesh.material = this.matStart;
+
                         let ventelationPinmat = this.ventelationPin.getComponent('mesh');
                         ventelationPinmat.material = this.matStart;
 
@@ -105,62 +135,48 @@ export class ColiderDetection extends Component {
                     }
                     this.objectsArr = [];
                 }
-        //}
-        //console.log(this.objectsArr);
-        //console.log(collidingComps.children);
-        // for(const otherCollision of collidingComps){
-        //     //console.log(otherCollision.object.name);
-        //     if(!this.check){
-        //         // let collidingMesh = otherCollision.object.getComponent('mesh');
-        //         // collidingMesh.material = this.matCollision;
-        //         // this.objectsArr.push(otherCollision);
-        //         this.check = true;
-        //         this.objectsArr.push(otherCollision);
-        //         if(otherCollision.object.name === "ventelation"){
-        //             let ventelationPinmat = this.ventelationPin.getComponent('mesh');
-        //             ventelationPinmat.material = this.matCollision;
-        //             //this.ventelationPin.material.material = this.matCollision;
-        //             console.log('reached ventelation');
-        //             //hapticFeedback(this.object, 0.5, 50);
-        //             //this.objectsArr.push(otherCollision);
-        //         }
-        //
-        //         if(otherCollision.object.name === "lasers"){
-        //             let laserPinmat = this.lasersPin.getComponent('mesh');
-        //             laserPinmat.material = this.matCollision;
-        //             console.log('reached lasers')
-        //             //hapticFeedback(this.object, 0.5, 50);
-        //             //this.objectsArr.push(otherCollision);
-        //         }
-        //
-        //         if(otherCollision.object.name === "headPhone"){
-        //             let headPhonePinmat = this.headPhonePin.getComponent('mesh');
-        //             headPhonePinmat.material = this.matCollision;
-        //             console.log('reached headPhone')
-        //             //hapticFeedback(this.object, 0.5, 50);
-        //             //this.objectsArr.push(otherCollision);
-        //         }
-        //     }
-        // }
-        //
-        // if(collidingComps.length === 0){
-        //     console.log('yes');
-        //     this.check = false;
-        //     for (let i = 0; i < this.objectsArr.length; i++) {
-        //         let startMesh = this.objectsArr[i].object.getComponent('mesh');
-        //         startMesh.material = this.matStart;
-        //     }
-        //     this.objectsArr = [];
-        //     //this.objectsArr = [];
-        //     // let ventelationPinmat = this.ventelationPin.getComponent('mesh');
-        //     // ventelationPinmat.material = this.matStart;
-        //     //
-        //     // let laserPinmat = this.lasersPin.getComponent('mesh');
-        //     // laserPinmat.material = this.matStart;
-        //     //
-        //     // let headPhonePinmat = this.headPhonePin.getComponent('mesh');
-        //     // headPhonePinmat.material = this.matStart;
-        //}
+
+    //Positioning the information
+
+
+
+
+
+
+    if(this.ventelationCollided)
+    {
+        let ventelationPanelMesh = this.ventelationPanel.getComponent('mesh');
+        ventelationPanelMesh.active = true;
+
+
+        let lasersPanelMesh = this.lasersPanel.getComponent('mesh');
+        lasersPanelMesh.active = false;
+        let headPhonePanelMesh = this.headPhonePanel.getComponent('mesh');
+        headPhonePanelMesh.active = false;
+
+    }
+    if(this.headPhoneCollided){
+        let headPhonePanelMesh = this.headPhonePanel.getComponent('mesh');
+        headPhonePanelMesh.active = true;
+
+        let ventelationPanelMesh = this.ventelationPanel.getComponent('mesh');
+        ventelationPanelMesh.active = false;
+        let lasersPanelMesh = this.lasersPanel.getComponent('mesh');
+        lasersPanelMesh.active = false;
+
+    }
+    if(this.laserCollided){
+        let lasersPanelMesh = this.lasersPanel.getComponent('mesh');
+        lasersPanelMesh.active = true;
+
+        let headPhonePanelMesh = this.headPhonePanel.getComponent('mesh');
+        headPhonePanelMesh.active = false;
+        let ventelationPanelMesh = this.ventelationPanel.getComponent('mesh');
+        ventelationPanelMesh.active = false;
+    }
+
+
+        //this.headPhonePanel.active = false;
 
     }
 }
