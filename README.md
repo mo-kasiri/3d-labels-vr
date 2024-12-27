@@ -4,7 +4,7 @@
 
 
 # Watch the Demo (wait for the gif)
-<img alt="Demo.gif" src="https:github.com/mo-kasiri/3d-labels-vr/blob/main/Demo.gif?raw=true" data-hpc="true" class="Box-sc-g0xbh4-0 kzRgrI">
+<img alt="Demo.gif" src="https://github.com/mo-kasiri/3d-labels-vr/blob/main/Demo.gif?raw=true" data-hpc="true" class="Box-sc-g0xbh4-0 kzRgrI">
 
 ## How it works
 
